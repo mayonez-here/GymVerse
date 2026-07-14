@@ -1,0 +1,25 @@
+import api from '../utils/api';
+
+export const gymService = {
+  getAllGyms: () => api.get('/gyms'),
+  getGymById: (id) => api.get(`/gyms/${id}`),
+  createGym: (data) => api.post('/gyms', data),
+  updateGym: (id, data) => api.put(`/gyms/${id}`, data),
+  deleteGym: (id) => api.delete(`/gyms/${id}`),
+  getNearbyGyms: (lng, lat, maxDistance = 5000) => api.get(`/gyms/nearby?lng=${lng}&lat=${lat}&maxDistance=${maxDistance}`),
+  
+  // ✅ NEW: Owner trainer management functions
+   getOwnerGyms: () => api.get('/gyms/owner/gyms'),
+  getGymApplications: (gymId) => api.get(`/gyms/${gymId}/applications`),
+  getGymTrainers: (gymId) => api.get(`/gyms/${gymId}/trainers`),
+  approveTrainer: (gymId, trainerId) => api.put(`/gyms/${gymId}/trainers/${trainerId}/approve`),
+  rejectTrainer: (gymId, trainerId) => api.put(`/gyms/${gymId}/trainers/${trainerId}/reject`),
+  removeTrainer: (gymId, trainerId) => api.delete(`/gyms/${gymId}/trainers/${trainerId}`),
+  getGymSentRequests: (gymId) => api.get(`/gyms/${gymId}/sent-requests`),
+  updateApplicationStatus: (gymId, trainerId, status) => api.put(`/gyms/${gymId}/applications/${trainerId}`, { status }),
+  cancelSentRequest: (gymId, trainerId) => api.delete(`/gyms/${gymId}/sent-requests/${trainerId}`),
+  // Add to gymService object
+getGymRatings: (gymId) => api.get(`/gyms/${gymId}/ratings`),
+addGymRating: (gymId, rating, review) => api.post(`/gyms/${gymId}/ratings`, { rating, review }),
+deleteGymRating: (gymId) => api.delete(`/gyms/${gymId}/ratings`),
+};
